@@ -1,5 +1,6 @@
 .env
 .history
+localFiles
 
 # Playwright
 node_modules/
