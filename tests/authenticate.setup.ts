@@ -10,7 +10,7 @@ setup('Save login state', async ({ request, page }) => {
    const responseBody = (await response.json()) as AuthResponse;
    const accessToken: string = responseBody.access_token;
    // Save access token
-   await page.goto(baseUrl);
+   await page.goto('/');
    await page.evaluate((accessToken) => {
       localStorage.setItem('token', accessToken);
    }, accessToken);

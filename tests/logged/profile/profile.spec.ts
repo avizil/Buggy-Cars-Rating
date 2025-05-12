@@ -1,8 +1,8 @@
-import { test, expect, APIResponse } from '@playwright/test';
+import { test, expect, APIResponse, Page } from '@playwright/test';
 import { getProfile, updateProfile } from '../../../api/requests/profile';
 import { getAuthPhrase } from '../../../utils/authJsonHelper';
 import { Profile } from '../../../utils/types/userCredentails.interface';
-import { baseUrl, userCreds } from '../../../consts';
+import { userCreds } from '../../../consts';
 import { generateRandomLabel } from '../../../utils/utils';
 import { authenticateApi } from '../../../api/requests/authenticate';
 import { PageHeader } from '../../../pages/header.page';
@@ -25,12 +25,22 @@ test('Update profile and verify new data in the UI', async ({ request, page }) =
    const response: APIResponse = await updateProfile(request, token, requestBody);
    await expect(response, { message: 'Failed to update profile!' }).toBeOK();
    // Verify changes in the UI
-   await page.goto(baseUrl);
+   await page.goto('/');
    const pageHeader: PageHeader = new PageHeader(page);
    pageHeader.clickProfileButton('Profile');
    const profilePage: ProfilePage = new ProfilePage(page);
    await expect(profilePage.inputFields('Age')).toHaveValue(newAge);
    await expect(profilePage.inputFields('Address')).toHaveValue(newAddress);
+});
+
+test('Logout', async ({ page }) => {
+   await page.goto('/');
+   const pageHeader: PageHeader = new PageHeader(page);
+   await pageHeader.clickProfileButton('Logout');
+   const storageState = await page.context().storageState();
+   await expect(storageState.origins, {
+      message: 'Storage state was not deleted, therefore user was not logged out!',
+   }).toStrictEqual([]);
 });
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

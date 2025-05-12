@@ -79,7 +79,7 @@ test.describe('Login & Authentication', async () => {
    });
 
    test('Verify UI Login flow', async ({ page }) => {
-      await page.goto(baseUrl);
+      await page.goto('/');
       const pageHeader: PageHeader = new PageHeader(page);
       // Listen for the POST authorization request
       const authListener: Promise<Response> = page.waitForResponse(
