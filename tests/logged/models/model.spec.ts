@@ -10,20 +10,17 @@ test('Verify model list API', async ({ request }) => {
 });
 
 test('Verify specific model get API', async ({ request }) => {
-   // Get a model ID to fetch
+   // Get a model ID through the models API
    const modelsRes: APIResponse = await getModels(request);
    const modelResBody = await modelsRes.json();
    const fetchedModelList = modelResBody.models;
    await expect(fetchedModelList.length, { message: 'Response retrieved 0 models!' }).toBeGreaterThan(0); // Verify size, to get a user friendly error in case GET models has issues
-   const modelId: string = fetchedModelList[0].id;
-   const modelName: string = fetchedModelList[0].name;
-   const make: string = fetchedModelList[0].make;
    // Fetch the found model ID
-   const res: APIResponse = await getSpecificModel(request, modelId);
+   const res: APIResponse = await getSpecificModel(request, fetchedModelList[0].id);
    await expect(res, { message: `Error on GET model: ${res.statusText()}` }).toBeOK();
-   // Verify data integrity
+   // Verify data integrity (model should be the same as the previosly fetched one)
    const resBody = await res.json();
-   await expect(resBody.modelId).toBe(modelId);
-   await expect(resBody.name).toBe(modelName);
-   await expect(resBody.make).toBe(make);
+   await expect(resBody.modelId).toBe(fetchedModelList[0].id);
+   await expect(resBody.name).toBe(fetchedModelList[0].name);
+   await expect(resBody.make).toBe(fetchedModelList[0].make);
 });

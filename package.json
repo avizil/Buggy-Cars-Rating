@@ -1,8 +1,8 @@
 {
   "name": "buggy-cars-rating",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
+    "test": "npx playwright test",
     "test:registration": "npx playwright test --project=registration",
     "test:registration-headed": "npx playwright test --project=registration --headed",
     "test:logged": "npx playwright test --project=logged",

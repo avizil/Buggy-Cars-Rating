@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { baseUrl, STORAGE_STATE_PATH, env } from './consts';
+import { baseUrl, STORAGE_STATE_PATH, env } from './config/consts';
 import { loadEnv } from './core/utils/envLoader';
 
 // Load env file according to the env const set in the consts file
