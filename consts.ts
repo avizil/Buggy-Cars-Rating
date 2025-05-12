@@ -2,7 +2,7 @@ import path from 'path';
 import { UserCredentials } from './utils/types/userCredentails.interface';
 
 // Configures which .env.* file to use
-export const env: string = 'test';
+export const env: string = 'dev';
 export const baseUrl: string = 'https://buggy.justtestit.org/';
 
 export const userCreds: UserCredentials = {

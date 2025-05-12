@@ -8,6 +8,7 @@ import { createUser } from '../../api/requests/register';
 import { authEndpoint, postUserEndpoint } from '../../api/endpoints';
 import { PageHeader } from '../../pages/header.page';
 import { authenticateApi } from '../../api/requests/authenticate';
+import { AuthResponse } from '../../utils/types/authApiResponse';
 
 const registerUrl: string = baseUrl + 'register'; // https://buggy.justtestit.org/register
 
@@ -52,9 +53,11 @@ test('Verfiy UI registration sends a correct API request', async ({ page }) => {
    }).toEqual(expectedReqBody);
 });
 
-test('Verify authentication success', async ({ request }) => {
+test.only('Verify authentication success', async ({ request }) => {
    const response: APIResponse = await authenticateApi(request, { username: userCreds.username, password: userCreds.password });
    await expect(response, { message: 'Authentication failed with correct credentials!' }).toBeOK();
+   const responseBody: AuthResponse = (await response.json()) as AuthResponse;
+   await expect(responseBody.access_token).toBeTruthy();
 });
 
 // Send an authentication request with a valid username and wrong password, verify server rejects the login authorization attempt
