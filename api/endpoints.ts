@@ -1,5 +1,8 @@
 export const baseApiEndpoint: string = 'https://k51qryqov3.execute-api.ap-southeast-2.amazonaws.com/';
 
-export const postUserEndpoint: string = baseApiEndpoint + 'prod/users';
-export const authEndpoint: string = baseApiEndpoint + 'prod/oauth/token';
-export const getCurrentUserEndpoint: string = baseApiEndpoint + 'prod/users/currrent';
+// Authentication endpoint
+export const authEndpoint: string = baseApiEndpoint + 'prod/oauth/token'; // POST
+// User resources endpoints
+export const usersEndpoint: string = baseApiEndpoint + 'prod/users'; // POST create new user
+export const currentUserEndpoint: string = usersEndpoint + '/current'; // GET
+export const profileEndpoint: string = usersEndpoint + '/profile'; // POST, GET

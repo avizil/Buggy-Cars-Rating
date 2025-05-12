@@ -7,6 +7,7 @@ export class PageHeader {
    readonly passwordInput: Locator;
    readonly loginButton: Locator;
    readonly registerButton: Locator;
+   readonly profileButtons: Function;
 
    constructor(page: Page) {
       // The header is present throughout whole website - use header locator to ensure elements outside of it won't be fetched
@@ -16,6 +17,7 @@ export class PageHeader {
       this.passwordInput = this.header.locator('input[name="password"]');
       this.loginButton = this.header.getByRole('button', { name: 'Login' });
       this.registerButton = this.header.getByRole('link', { name: 'Register' });
+      this.profileButtons = (buttonLabel: string) => this.header.getByRole('link', { name: buttonLabel });
    }
 
    async login(username: string, password: string) {
@@ -30,5 +32,10 @@ export class PageHeader {
 
    async clickRegisterButton() {
       await this.registerButton.click();
+   }
+
+   async clickProfileButton(buttonLabel: string) {
+      const button: Locator = this.profileButtons(buttonLabel);
+      await button.click();
    }
 }

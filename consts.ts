@@ -3,7 +3,9 @@ import { UserCredentials } from './utils/types/userCredentails.interface';
 
 // Configures which .env.* file to use
 export const env: string = 'dev';
+// URLs
 export const baseUrl: string = 'https://buggy.justtestit.org/';
+export const profileUrl: string = baseUrl + 'profile';
 
 export const userCreds: UserCredentials = {
    username: process.env.USER_NAME!,

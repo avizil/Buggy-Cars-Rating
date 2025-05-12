@@ -5,7 +5,7 @@ import { generateRandomLabel } from '../../utils/utils';
 import { RegisterPage } from '../../pages/register.page';
 import { userCreds } from '../../consts';
 import { createUser } from '../../api/requests/register';
-import { authEndpoint, postUserEndpoint } from '../../api/endpoints';
+import { authEndpoint, usersEndpoint } from '../../api/endpoints';
 import { PageHeader } from '../../pages/header.page';
 import { authenticateApi } from '../../api/requests/authenticate';
 import { AuthResponse } from '../../utils/types/authApiResponse';
@@ -46,7 +46,7 @@ test.describe('Registration Tests', async () => {
       await registerPage.fillCredentails(userCreds);
       const expectedReqBody = userCreds;
       expectedReqBody.confirmPassword = userCreds.password;
-      const requestPromise = page.waitForRequest(postUserEndpoint);
+      const requestPromise = page.waitForRequest(usersEndpoint);
       await registerPage.clickButton('Register');
       //  Verify request method and body are correct
       const request = await requestPromise;

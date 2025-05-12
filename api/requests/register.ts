@@ -1,6 +1,6 @@
-import { UserCredentials } from '../../types/registration.interface';
+import { UserCredentials } from '../../utils/types/userCredentails.interface';
 import { APIRequestContext, APIResponse } from '@playwright/test';
-import { postUserEndpoint } from '../endpoints';
+import { usersEndpoint } from '../endpoints';
 
 export async function createUser(request: APIRequestContext, data: UserCredentials): Promise<APIResponse> {
    const requestBody: UserCredentials = {
@@ -9,5 +9,5 @@ export async function createUser(request: APIRequestContext, data: UserCredentia
       lastName: data.lastName,
       password: data.password,
    };
-   return await request.post(postUserEndpoint, { data: requestBody });
+   return await request.post(usersEndpoint, { data: requestBody });
 }

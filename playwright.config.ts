@@ -44,7 +44,7 @@ export default defineConfig({
          name: 'logged',
          use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE_PATH },
          dependencies: ['setup'],
-         testDir: './tests/logged',
+         testDir: './tests/logged/',
       },
    ],
 
