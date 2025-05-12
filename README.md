@@ -11,8 +11,8 @@
 ---
 
 ## 📁 Project Structure
+```bash
 
-.
 ├── core/
 │ ├── api/ # API helpers and request logic
 │ ├── pages/ # Page object models
@@ -28,7 +28,7 @@
 ├── playwright.config.ts
 ├── package.json
 └── README.md
-
+```
 ## 🚀 Installation and Setup
 
 Follow these steps to install dependencies, configure the environment, and prepare the project for test execution.
