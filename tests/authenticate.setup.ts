@@ -1,7 +1,7 @@
 import { APIResponse, expect, request, Response, test as setup } from '@playwright/test';
-import { authenticateApi } from '../api/requests/authenticate';
+import { authenticateApi } from '../core/api/requests/authenticate';
 import { userCreds } from '../consts';
-import { AuthResponse } from '../utils/types/authApiResponse';
+import { AuthResponse } from '../core/utils/types/authApiResponse';
 import { STORAGE_STATE_PATH } from '../consts';
 
 setup('Save login state', async ({ request, page }) => {

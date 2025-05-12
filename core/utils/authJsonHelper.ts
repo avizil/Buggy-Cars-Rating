@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { STORAGE_STATE_PATH } from '../consts';
+import { STORAGE_STATE_PATH } from '../../consts';
 
 function getAuthToken(): string {
    const rawJson = fs.readFileSync(STORAGE_STATE_PATH, 'utf-8');

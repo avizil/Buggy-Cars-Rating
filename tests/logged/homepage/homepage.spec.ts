@@ -1,5 +1,5 @@
 import { test, Page, expect } from '@playwright/test';
-import { HomePage } from '../../../pages/homepage.page';
+import { HomePage } from '../../../core/pages/homepage.page';
 
 const menuOptions: { label: string; endpoint: string }[] = [
    { label: 'Popular Make', endpoint: 'make/' },

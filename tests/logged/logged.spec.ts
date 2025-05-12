@@ -1,6 +1,6 @@
 // import test from '@playwright/test';
-// import { ProfilePage } from '../../pages/profile.page';
-// import { HomePage } from '../../pages/homepage.page';
+// import { ProfilePage } from '../../core/pages/profile.page';
+// import { HomePage } from '../../core/pages/homepage.page';
 
 // test.only('Test', async ({ page }) => {
 //    await page.goto('/');

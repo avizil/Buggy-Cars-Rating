@@ -1,12 +1,12 @@
 import { test, expect, APIResponse, Page } from '@playwright/test';
-import { getProfile, updateProfile } from '../../../api/requests/profile';
-import { getAuthPhrase } from '../../../utils/authJsonHelper';
-import { Profile } from '../../../utils/types/userCredentails.interface';
+import { getProfile, updateProfile } from '../../../core/api/requests/profile';
+import { getAuthPhrase } from '../../../core/utils/authJsonHelper';
+import { Profile } from '../../../core/utils/types/userCredentails.interface';
 import { userCreds } from '../../../consts';
-import { generateRandomLabel } from '../../../utils/utils';
-import { authenticateApi } from '../../../api/requests/authenticate';
-import { PageHeader } from '../../../pages/header.page';
-import { ProfilePage } from '../../../pages/profile.page';
+import { generateRandomLabel } from '../../../core/utils/utils';
+import { authenticateApi } from '../../../core/api/requests/authenticate';
+import { PageHeader } from '../../../core/pages/header.page';
+import { ProfilePage } from '../../../core/pages/profile.page';
 
 // As password changes change the access token, additional planning is needed.
 test.describe.configure({ mode: 'parallel' });

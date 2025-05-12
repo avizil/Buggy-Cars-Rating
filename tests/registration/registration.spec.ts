@@ -1,14 +1,14 @@
 import { test, expect, APIResponse, APIRequestContext, Response } from '@playwright/test';
-import { UserCredentials } from '../../utils/types/userCredentails.interface';
+import { UserCredentials } from '../../core/utils/types/userCredentails.interface';
 import { baseUrl } from '../../consts';
-import { generateRandomLabel } from '../../utils/utils';
-import { RegisterPage } from '../../pages/register.page';
+import { generateRandomLabel } from '../../core/utils/utils';
+import { RegisterPage } from '../../core/pages/register.page';
 import { userCreds } from '../../consts';
-import { createUser } from '../../api/requests/register';
-import { authEndpoint, usersEndpoint } from '../../api/endpoints';
-import { PageHeader } from '../../pages/header.page';
-import { authenticateApi } from '../../api/requests/authenticate';
-import { AuthResponse } from '../../utils/types/authApiResponse';
+import { createUser } from '../../core/api/requests/register';
+import { authEndpoint, usersEndpoint } from '../../core/api/endpoints';
+import { PageHeader } from '../../core/pages/header.page';
+import { authenticateApi } from '../../core/api/requests/authenticate';
+import { AuthResponse } from '../../core/utils/types/authApiResponse';
 
 // This module contains all tests that need to be performed while the user is not logged in - registration and authentication
 
