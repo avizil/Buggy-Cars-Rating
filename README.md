@@ -1,2 +1,3 @@
 .env
 State
+Configure consts

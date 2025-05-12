@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import { UserCredentials } from '../utils/types/userCredentails.interface';
 
 export class RegisterPage {
    page: Page;
@@ -18,12 +19,12 @@ export class RegisterPage {
       await field.fill(value);
    }
 
-   async fillCredentails(username: string, firstName: string, lastName: string, password: string) {
-      await this.fillInputField('Login', username);
-      await this.fillInputField('First Name', firstName);
-      await this.fillInputField('Last Name', lastName);
-      await this.fillInputField('Password', password);
-      await this.fillInputField('Confirm Password', password);
+   async fillCredentails(credentials: UserCredentials) {
+      await this.fillInputField('Login', credentials.username);
+      await this.fillInputField('First Name', credentials.firstName);
+      await this.fillInputField('Last Name', credentials.lastName);
+      await this.fillInputField('Password', credentials.password);
+      await this.fillInputField('Confirm Password', credentials.password);
    }
 
    async clickButton(buttonLabel: string) {

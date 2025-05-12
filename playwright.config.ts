@@ -1,14 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
-import { baseUrl, STORAGE_STATE_PATH } from './consts';
+import { baseUrl, STORAGE_STATE_PATH, env } from './consts';
+import { loadEnv } from './utils/envLoader';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
+// Load env file according to the env const set in the consts file
+loadEnv(env);
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
