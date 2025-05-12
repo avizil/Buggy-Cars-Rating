@@ -10,74 +10,84 @@ import { PageHeader } from '../../pages/header.page';
 import { authenticateApi } from '../../api/requests/authenticate';
 import { AuthResponse } from '../../utils/types/authApiResponse';
 
+// This module contains all tests that need to be performed while the user is not logged in - registration and authentication
+
 const registerUrl: string = baseUrl + 'register'; // https://buggy.justtestit.org/register
 
-// To not clog the server, marked as skip by default
-test.skip('Verify Post User request is successful', async ({ request }) => {
-   const requestBody: UserCredentials = {
-      username: 'random' + generateRandomLabel(8),
-      firstName: 'random',
-      lastName: 'random',
-      password: 'random12_' + generateRandomLabel(8),
-   };
-   const response: APIResponse = await createUser(request, requestBody);
-   await expect(response).toBeOK();
-});
-
-// Verify that a bad response is received if an already existing user is posted
-test('Verify duplicate users are not created', async ({ request }) => {
-   const requestBody: UserCredentials = {
-      username: userCreds.username,
-      firstName: userCreds.firstName,
-      lastName: userCreds.lastName,
-      password: userCreds.password,
-      confirmPassword: userCreds.password,
-   };
-   const response: APIResponse = await createUser(request, requestBody);
-   await expect(response).not.toBeOK();
-});
-
-test('Verfiy UI registration sends a correct API request', async ({ page }) => {
-   await page.goto(registerUrl);
-   const registerPage: RegisterPage = new RegisterPage(page);
-   await registerPage.fillCredentails(userCreds);
-   const expectedReqBody = userCreds;
-   expectedReqBody.confirmPassword = userCreds.password;
-   const requestPromise = page.waitForRequest(postUserEndpoint);
-   await registerPage.clickButton('Register');
-   //  Verify request method and body are correct
-   const request = await requestPromise;
-   await expect(request.method(), { message: 'Wrong API method on request sent by Register button!' }).toBe('POST');
-   await expect(JSON.parse(request.postData() || '{}'), {
-      message: "Registration post request's body does not match the expectation!",
-   }).toEqual(expectedReqBody);
-});
-
-test.only('Verify authentication success', async ({ request }) => {
-   const response: APIResponse = await authenticateApi(request, { username: userCreds.username, password: userCreds.password });
-   await expect(response, { message: 'Authentication failed with correct credentials!' }).toBeOK();
-   const responseBody: AuthResponse = (await response.json()) as AuthResponse;
-   await expect(responseBody.access_token).toBeTruthy();
-});
-
-// Send an authentication request with a valid username and wrong password, verify server rejects the login authorization attempt
-test('Verify authentication is rejected when password is wrong', async ({ request }) => {
-   const response: APIResponse = await authenticateApi(request, {
-      username: userCreds.username,
-      password: userCreds.password + ' - WRONG PASSWORD',
+test.describe('Registration Tests', async () => {
+   // To not clog the server, marked as skip by default
+   test.skip('Verify Post User request is successful', async ({ request }) => {
+      const requestBody: UserCredentials = {
+         username: 'random' + generateRandomLabel(8),
+         firstName: 'random',
+         lastName: 'random',
+         password: 'random12_' + generateRandomLabel(8),
+      };
+      const response: APIResponse = await createUser(request, requestBody);
+      await expect(response).toBeOK();
    });
-   await expect(response, { message: 'Authentication succeeded with the wrong password!' }).not.toBeOK();
+
+   // Verify that a bad response is received if an already existing user is posted
+   test('Verify duplicate users are not created', async ({ request }) => {
+      const requestBody: UserCredentials = {
+         username: userCreds.username,
+         firstName: userCreds.firstName,
+         lastName: userCreds.lastName,
+         password: userCreds.password,
+         confirmPassword: userCreds.password,
+      };
+      const response: APIResponse = await createUser(request, requestBody);
+      await expect(response).not.toBeOK();
+   });
+
+   test('Verfiy UI registration sends a correct API request', async ({ page }) => {
+      await page.goto(registerUrl);
+      const registerPage: RegisterPage = new RegisterPage(page);
+      await registerPage.fillCredentails(userCreds);
+      const expectedReqBody = userCreds;
+      expectedReqBody.confirmPassword = userCreds.password;
+      const requestPromise = page.waitForRequest(postUserEndpoint);
+      await registerPage.clickButton('Register');
+      //  Verify request method and body are correct
+      const request = await requestPromise;
+      await expect(request.method(), { message: 'Wrong API method on request sent by Register button!' }).toBe('POST');
+      await expect(JSON.parse(request.postData() || '{}'), {
+         message: "Registration post request's body does not match the expectation!",
+      }).toEqual(expectedReqBody);
+   });
 });
 
-test('Verify UI Login flow', async ({ page }) => {
-   await page.goto(baseUrl);
-   const pageHeader: PageHeader = new PageHeader(page);
-   // Listen for the POST authorization request
-   const authListener: Promise<Response> = page.waitForResponse(
-      (res) => res.url() === authEndpoint && res.request().method() === 'POST'
-   );
-   await pageHeader.login(userCreds.username, userCreds.password);
-   const response: Response = await authListener;
-   await expect(response.status(), { message: 'UI login flow failed!' }).toBe(200);
-   await page.pause();
+// Login & authentication test
+test.describe('Login & Authentication', async () => {
+   test('Verify authentication success', async ({ request }) => {
+      const response: APIResponse = await authenticateApi(request, {
+         username: userCreds.username,
+         password: userCreds.password,
+      });
+      await expect(response, { message: 'Authentication failed with correct credentials!' }).toBeOK();
+      const responseBody: AuthResponse = (await response.json()) as AuthResponse;
+      await expect(responseBody.access_token).toBeTruthy();
+   });
+
+   // Send an authentication request with a valid username and wrong password, verify server rejects the login authorization attempt
+   test('Verify authentication is rejected when password is wrong', async ({ request }) => {
+      const response: APIResponse = await authenticateApi(request, {
+         username: userCreds.username,
+         password: userCreds.password + ' - WRONG PASSWORD',
+      });
+      await expect(response, { message: 'Authentication succeeded with the wrong password!' }).not.toBeOK();
+   });
+
+   test('Verify UI Login flow', async ({ page }) => {
+      await page.goto(baseUrl);
+      const pageHeader: PageHeader = new PageHeader(page);
+      // Listen for the POST authorization request
+      const authListener: Promise<Response> = page.waitForResponse(
+         (res) => res.url() === authEndpoint && res.request().method() === 'POST'
+      );
+      await pageHeader.login(userCreds.username, userCreds.password);
+      const response: Response = await authListener;
+      await expect(response.status(), { message: 'UI login flow failed!' }).toBe(200);
+      await page.pause();
+   });
 });
