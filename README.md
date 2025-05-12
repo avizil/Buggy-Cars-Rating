@@ -1,3 +1,5 @@
+# 🧪 Playwright Test Suite for [Buggy Cars Rating](https://buggy.justtestit.org/)
+
 ## 📚 Table of Contents
 
 -  [Project Structure](#-project-structure)
