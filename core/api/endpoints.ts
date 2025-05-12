@@ -9,7 +9,8 @@ export const profileEndpoint: string = usersEndpoint + '/profile'; // POST, GET
 
 // Models
 export const modelEndpoint: string = baseApiEndpoint + 'prod/models';
-export const sepcificModelEndpoint: string = modelEndpoint + '/';
+export const specificModelEndpoint: string = modelEndpoint + '/';
+export const voteEndpoint: Function = (modelId: string): string => `${specificModelEndpoint}${modelId}/vote`;
 
 // Makes
 export const makesEndpoint: string = baseApiEndpoint + 'prod/makes/';

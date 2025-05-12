@@ -1,5 +1,5 @@
 import { APIRequestContext, APIResponse } from '@playwright/test';
-import { modelEndpoint, sepcificModelEndpoint } from '../endpoints';
+import { modelEndpoint, specificModelEndpoint, voteEndpoint } from '../endpoints';
 
 /**
  * Make a GET request to fetch a list of car models
@@ -19,5 +19,12 @@ export async function getModels(request: APIRequestContext, modelPage?: number):
  * @returns
  */
 export async function getSpecificModel(request: APIRequestContext, modelId: string): Promise<APIResponse> {
-   return await request.get(sepcificModelEndpoint + modelId);
+   return await request.get(specificModelEndpoint + modelId);
+}
+
+export async function vote(request: APIRequestContext, token: string, modelId: string, comment?: string): Promise<APIResponse> {
+   return await request.post(voteEndpoint(modelId), {
+      headers: { Authorization: token, 'content-type': 'application/json' },
+      data: comment ? { comment: comment } : {},
+   });
 }
