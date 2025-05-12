@@ -24,16 +24,21 @@ test('Verify specific model get API', async ({ request }) => {
    await expect(resBody.make, { message: `Wrong model make!` }).toBe(modelData.make);
 });
 
-// Need to fix
-test.skip('Verify vote & comments are added when using vote API', async ({ request }) => {
+// Will work only one time per model
+test.only('Verify vote & comments are added when using vote API', async ({ request }) => {
+   // Post a vote & comment
    const token = await getAuthPhrase();
-   const modelData: Model = await getReferenceModel(request)[0];
+   const modelsRes: APIResponse = await getModels(request);
+   //   console.log(modelsRes);
+   const modelData: Model = (await extractModelList(modelsRes))[0];
+   console.log((await extractModelList(modelsRes))[0]);
    const comment: string = 'API Comment!';
    const response: APIResponse = await vote(request, token, modelData.id!, comment);
-   await expect(response).toBeOK();
+   await expect(response, { message: `Vote post request failed: ${response.statusText()}` }).toBeOK();
    //    Verify vote & comment have been added
    //    Ideally would use get specific model, but as has issues, use the function as previously
-   const updatedModelList: Model[] = await getReferenceModel(request);
+   const updatedResponse: APIResponse = await getModels(request);
+   const updatedModelList: Model[] = await extractModelList(updatedResponse);
    let updatedModel: Model;
    // In case the order changes, find the voted model
    for (const mod of updatedModelList) {
@@ -58,7 +63,14 @@ test.skip('Verify vote & comments are added when using vote API', async ({ reque
 async function getReferenceModel(request: APIRequestContext): Promise<Model[]> {
    const modelsRes: APIResponse = await getModels(request);
    const modelResBody = await modelsRes.json();
+   console.log(modelResBody);
    const fetchedModelList: Model[] = modelResBody.models;
    await expect(fetchedModelList.length, { message: 'Response retrieved 0 models!' }).toBeGreaterThan(0); // Verify size, to get a user friendly error in case GET models has issues
    return fetchedModelList;
+}
+
+async function extractModelList(response: APIResponse): Promise<Model[]> {
+   const modelResBody = await response.json();
+   //    console.log(modelResBody.models as Model[]);
+   return modelResBody.models as Model[];
 }
