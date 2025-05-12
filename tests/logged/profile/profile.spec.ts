@@ -28,6 +28,7 @@ test('Update profile and verify new data in the UI', async ({ request, page }) =
    await page.goto('/');
    const pageHeader: PageHeader = new PageHeader(page);
    pageHeader.clickProfileButton('Profile');
+   await page.waitForLoadState('networkidle');
    const profilePage: ProfilePage = new ProfilePage(page);
    await expect(profilePage.inputFields('Age')).toHaveValue(newAge);
    await expect(profilePage.inputFields('Address')).toHaveValue(newAddress);

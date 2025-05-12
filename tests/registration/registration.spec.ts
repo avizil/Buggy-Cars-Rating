@@ -27,6 +27,7 @@ test.describe('Registration Tests', async () => {
       await expect(response).toBeOK();
    });
 
+   // May remove
    // Verify that a bad response is received if an already existing user is posted
    test('Verify duplicate users are not created', async ({ request }) => {
       const requestBody: UserCredentials = {
