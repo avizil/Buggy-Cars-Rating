@@ -1,4 +1,4 @@
-import { CreateUserRequest } from '../../types/registeration.interface';
+import { CreateUserRequest } from '../../types/registration.interface';
 import { APIRequestContext, APIResponse } from '@playwright/test';
 import { postUserEndpoint } from '../endpoints';
 
