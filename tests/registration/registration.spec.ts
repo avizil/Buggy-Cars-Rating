@@ -1,7 +1,7 @@
 import { test, expect, APIResponse, APIRequestContext, Response } from '@playwright/test';
 import { UserCredentials } from '../../core/utils/types/userCredentails.interface';
 import { baseUrl } from '../../config/consts';
-import { generateRandomLabel } from '../../core/utils/utils';
+import { generateRandomLabel, generateRandomUserCreds } from '../../core/utils/utils';
 import { RegisterPage } from '../../core/pages/register.page';
 import { userCreds } from '../../config/consts';
 import { createUser } from '../../core/api/requests/register';
@@ -17,12 +17,7 @@ const registerUrl: string = baseUrl + 'register'; // https://buggy.justtestit.or
 test.describe('Registration Tests', async () => {
    // To not clog the server, mark as skip when testing
    test('Verify Post User request is successful', async ({ request }) => {
-      const requestBody: UserCredentials = {
-         username: 'random' + generateRandomLabel(8),
-         firstName: 'random',
-         lastName: 'random',
-         password: 'random12_' + generateRandomLabel(8),
-      };
+      const requestBody: UserCredentials = generateRandomUserCreds();
       const response: APIResponse = await createUser(request, requestBody);
       await expect(response).toBeOK();
    });

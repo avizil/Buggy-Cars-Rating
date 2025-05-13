@@ -1,10 +1,10 @@
 import { test, Page, expect, Response } from '@playwright/test';
 import { HomePage } from '../../../core/pages/homepage.page';
-import { makesEndpoint, modelEndpoint, sepcificModelEndpoint } from '../../../core/api/endpoints';
+import { makesEndpoint, modelEndpoint, specificModelEndpoint } from '../../../core/api/endpoints';
 
 const menuOptions: { label: string; endpoint: string; apiEndpoint?: string }[] = [
    { label: 'Popular Make', endpoint: 'make/', apiEndpoint: makesEndpoint },
-   { label: 'Popular Model', endpoint: 'model/', apiEndpoint: sepcificModelEndpoint },
+   { label: 'Popular Model', endpoint: 'model/', apiEndpoint: specificModelEndpoint },
    { label: 'Overall Rating', endpoint: 'overall', apiEndpoint: modelEndpoint },
 ];
 
