@@ -46,7 +46,7 @@ test('Logout', async ({ page }) => {
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // As the password change test causes issues with the request limit, it's skipped
-test.describe.skip('Important data edit tests - must revert changes after each', async () => {
+test.describe('Important data edit tests - must revert changes after each', async () => {
    // The password to change to in the tests. Needed to revert the changes
    const newPassword: string = userCreds.password + '!';
    test.describe.configure({ mode: 'serial' });
