@@ -1,5 +1,5 @@
 import path from 'path';
-import { UserCredentials } from './utils/types/userCredentails.interface';
+import { UserCredentials } from '../core/utils/types/userCredentails.interface';
 
 // Configures which .env.* file to use
 export const env: string = 'dev';
@@ -15,4 +15,4 @@ export const userCreds: UserCredentials = {
 };
 
 // Configure the path to the state storage
-export const STORAGE_STATE_PATH: string = path.resolve(__dirname, '.auth', 'login.json');
+export const STORAGE_STATE_PATH: string = path.resolve(__dirname, '..', '.auth', 'login.json');

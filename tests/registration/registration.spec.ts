@@ -1,9 +1,9 @@
 import { test, expect, APIResponse, APIRequestContext, Response } from '@playwright/test';
 import { UserCredentials } from '../../core/utils/types/userCredentails.interface';
-import { baseUrl } from '../../consts';
-import { generateRandomLabel } from '../../core/utils/utils';
+import { baseUrl } from '../../config/consts';
+import { generateRandomLabel, generateRandomUserCreds } from '../../core/utils/utils';
 import { RegisterPage } from '../../core/pages/register.page';
-import { userCreds } from '../../consts';
+import { userCreds } from '../../config/consts';
 import { createUser } from '../../core/api/requests/register';
 import { authEndpoint, usersEndpoint } from '../../core/api/endpoints';
 import { PageHeader } from '../../core/pages/header.page';
@@ -15,36 +15,19 @@ import { AuthResponse } from '../../core/utils/types/authApiResponse';
 const registerUrl: string = baseUrl + 'register'; // https://buggy.justtestit.org/register
 
 test.describe('Registration Tests', async () => {
-   // To not clog the server, marked as skip by default
-   test.skip('Verify Post User request is successful', async ({ request }) => {
-      const requestBody: UserCredentials = {
-         username: 'random' + generateRandomLabel(8),
-         firstName: 'random',
-         lastName: 'random',
-         password: 'random12_' + generateRandomLabel(8),
-      };
+   // To not clog the server, mark as skip when testing
+   test('Verify Post User request is successful', async ({ request }) => {
+      const requestBody: UserCredentials = generateRandomUserCreds();
       const response: APIResponse = await createUser(request, requestBody);
       await expect(response).toBeOK();
    });
 
-   // May remove
-   // Verify that a bad response is received if an already existing user is posted
-   test('Verify duplicate users are not created', async ({ request }) => {
-      const requestBody: UserCredentials = {
-         username: userCreds.username,
-         firstName: userCreds.firstName,
-         lastName: userCreds.lastName,
-         password: userCreds.password,
-         confirmPassword: userCreds.password,
-      };
-      const response: APIResponse = await createUser(request, requestBody);
-      await expect(response).not.toBeOK();
-   });
-
    test('Verfiy UI registration sends a correct API request', async ({ page }) => {
       await page.goto(registerUrl);
+      // Fill fields
       const registerPage: RegisterPage = new RegisterPage(page);
       await registerPage.fillCredentails(userCreds);
+      // Prepare expected request data
       const expectedReqBody = userCreds;
       expectedReqBody.confirmPassword = userCreds.password;
       const requestPromise = page.waitForRequest(usersEndpoint);

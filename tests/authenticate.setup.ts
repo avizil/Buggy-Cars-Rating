@@ -1,8 +1,8 @@
 import { APIResponse, expect, request, Response, test as setup } from '@playwright/test';
 import { authenticateApi } from '../core/api/requests/authenticate';
-import { userCreds } from '../consts';
+import { userCreds } from '../config/consts';
 import { AuthResponse } from '../core/utils/types/authApiResponse';
-import { STORAGE_STATE_PATH } from '../consts';
+import { STORAGE_STATE_PATH } from '../config/consts';
 
 setup('Save login state', async ({ request, page }) => {
    const response: APIResponse = await authenticateApi(request, { username: userCreds.username, password: userCreds.password });

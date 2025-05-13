@@ -2,7 +2,7 @@ import { test, expect, APIResponse, Page } from '@playwright/test';
 import { getProfile, updateProfile } from '../../../core/api/requests/profile';
 import { getAuthPhrase } from '../../../core/utils/authJsonHelper';
 import { Profile } from '../../../core/utils/types/userCredentails.interface';
-import { userCreds } from '../../../consts';
+import { userCreds } from '../../../config/consts';
 import { generateRandomLabel } from '../../../core/utils/utils';
 import { authenticateApi } from '../../../core/api/requests/authenticate';
 import { PageHeader } from '../../../core/pages/header.page';

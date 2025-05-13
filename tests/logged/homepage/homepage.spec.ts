@@ -20,7 +20,7 @@ test.describe('Verify Home Page Menu navigation', async () => {
          //   Open the menu option
          const homepage: HomePage = new HomePage(page);
          await homepage.clickMenuOption(option.label);
-         //   Verify opened URL & API response
+         //   Verify navigated URL & API response
          await expect(page.url()).toContain(baseUrl + option.endpoint);
          const res: Response = await requestListener;
          await expect(res.status()).toBe(200);

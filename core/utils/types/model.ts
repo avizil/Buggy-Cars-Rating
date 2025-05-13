@@ -9,4 +9,5 @@ export interface Model {
    engineVol?: number;
    maxSpeed?: number;
    totalComments?: number;
+   comments?: { user: string; datePosted: string; text: string }[];
 }
