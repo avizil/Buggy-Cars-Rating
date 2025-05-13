@@ -34,16 +34,16 @@ export default defineConfig({
       {
          name: 'setup',
          testMatch: /.*\.setup\.ts/,
-         use: { ...devices['Desktop Chrome'] },
+         use: { ...devices[`Desktop ${process.env.BROWSER}`] },
       },
       {
          name: 'registration',
-         use: { ...devices['Desktop Chrome'] },
+         use: { ...devices[`Desktop ${process.env.BROWSER}`] },
          testDir: './tests/registration',
       },
       {
          name: 'logged',
-         use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE_PATH },
+         use: { ...devices[`Desktop ${process.env.BROWSER}`], storageState: STORAGE_STATE_PATH },
          dependencies: ['setup'],
          testDir: './tests/logged/',
       },

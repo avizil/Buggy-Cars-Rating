@@ -11,6 +11,7 @@
 ---
 
 ## 📁 Project Structure
+
 ```bash
 
 ├── core/
@@ -29,6 +30,7 @@
 ├── package.json
 └── README.md
 ```
+
 ## 🚀 Installation and Setup
 
 Follow these steps to install dependencies, configure the environment, and prepare the project for test execution.
@@ -62,7 +64,8 @@ npx playwright install
 
 Environment-specific .env files are stored in the env/ directory.
 
-Copy the example .env.example file into a new .env.<your envName> file.
+Copy the example .env.example file into a new .env.<your environment name> file, for example .env.dev.
+The .env file contains the user credentials and browser configuration.
 The envName to use is set in ./config/consts.ts:
 
 ```typescript
